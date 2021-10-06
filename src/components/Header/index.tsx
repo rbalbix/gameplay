@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/core';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { ReactNode } from 'react';
 import { Text, View } from 'react-native';
@@ -14,18 +15,24 @@ type Props = {
 export function Header({ title, action }: Props) {
   const { secondary100, secondary40, heading } = theme.colors;
 
+  const navigation = useNavigation();
+
+  function handleGoBack() {
+    navigation.goBack();
+  }
+
   return (
     <LinearGradient
       colors={[secondary100, secondary40]}
       style={styles.container}
     >
-      <BorderlessButton>
+      <BorderlessButton onPress={handleGoBack}>
         <Feather name='arrow-left' size={24} color={heading} />
       </BorderlessButton>
 
       <Text style={styles.title}> {title} </Text>
 
-      {action && <View></View>}
+      {action && <View>{action}</View>}
     </LinearGradient>
   );
 }
